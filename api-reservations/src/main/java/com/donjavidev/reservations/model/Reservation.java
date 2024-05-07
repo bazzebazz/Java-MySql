@@ -1,6 +1,9 @@
 package com.donjavidev.reservations.model;
 
+import com.donjavidev.reservations.listener.ReservationEntityListener;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -9,17 +12,17 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Reservation {
+@EntityListeners(ReservationEntityListener.class)
+public class Reservation extends Base {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @Valid
+    @NotEmpty(message = "You need at least one passenger")
     @OneToMany
     @Cascade(CascadeType.ALL)
     @JoinColumn(name = "reservation_id")
     private List<Passenger> passengers;
 
+    @Valid
     @ManyToOne
     @Cascade(CascadeType.ALL)
     @JoinColumn(name = "itinerary_id")
@@ -44,14 +47,6 @@ public class Reservation {
         this.itinerary = itinerary;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public LocalDate getCreationDate() {
         return creationDate;
     }
@@ -67,19 +62,19 @@ public class Reservation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Reservation that = (Reservation) o;
-        return Objects.equals(id, that.id) && Objects.equals(passengers, that.passengers) && Objects.equals(itinerary, that.itinerary) && Objects.equals(creationDate, that.creationDate);
+        return Objects.equals(getId(), that.getId()) && Objects.equals(passengers, that.passengers) && Objects.equals(itinerary, that.itinerary) && Objects.equals(creationDate, that.creationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, passengers, itinerary, creationDate);
+        return Objects.hash(getId(), passengers, itinerary, creationDate);
     }
 
     //* Generate ToString
     @Override
     public String toString() {
         return "Reservation{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", passengers=" + passengers +
                 ", itinerary=" + itinerary +
                 ", creationDate=" + creationDate +

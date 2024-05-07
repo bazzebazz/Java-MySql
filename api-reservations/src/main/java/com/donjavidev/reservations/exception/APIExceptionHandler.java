@@ -2,6 +2,8 @@ package com.donjavidev.reservations.exception;
 
 import com.donjavidev.reservations.dto.ErrorDTO;
 import com.donjavidev.reservations.enums.APIError;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,16 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
         List<String> reasons = new ArrayList<>();
         for (FieldError error : ex.getBindingResult().getFieldErrors()) {
             reasons.add(String.format("%s - %s", error.getField(), error.getDefaultMessage()));
+        }
+        return ResponseEntity.status(APIError.VALIDATION_ERROR.getHttpStatus())
+                .body(new ErrorDTO(APIError.VALIDATION_ERROR.getMessage(), reasons));
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(ConstraintViolationException ex, WebRequest request) {
+        List<String> reasons = new ArrayList<>();
+        for (ConstraintViolation error : ex.getConstraintViolations()) {
+            reasons.add(String.format("%s - %s", error.getPropertyPath(), error.getMessage()));
         }
         return ResponseEntity.status(APIError.VALIDATION_ERROR.getHttpStatus())
                 .body(new ErrorDTO(APIError.VALIDATION_ERROR.getMessage(), reasons));

@@ -1,18 +1,23 @@
 package com.donjavidev.reservations.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-public class Passenger {
+public class Passenger extends Base {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Size(min = 1, max = 30)
+    @NotBlank(message = "firstName is mandatory")
     @Column(name = "first_name", nullable = false, length = 30)
     private String firstName;
+
+    @Size(min = 1, max = 30)
+    @NotBlank(message = "lastName is mandatory")
     @Column(name = "last_name", nullable = false, length = 30)
     private String lastName;
 
@@ -22,6 +27,7 @@ public class Passenger {
     @Column(name = "document_type", nullable = false)
     private String documentType;
 
+    @Past(message = "birthday need to be a date in the past")
     @Column(name = "birthday", nullable = false)
     private LocalDate birthday;
 
@@ -65,33 +71,26 @@ public class Passenger {
         this.birthday = birthday;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
 
     //*Generate Equals and Hascode + ToString
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Passenger passenger = (Passenger) o;
-        return Objects.equals(id, passenger.id) && Objects.equals(firstName, passenger.firstName) && Objects.equals(lastName, passenger.lastName) && Objects.equals(documentNumber, passenger.documentNumber) && Objects.equals(documentType, passenger.documentType) && Objects.equals(birthday, passenger.birthday);
+        return Objects.equals(getId(), passenger.getId()) && Objects.equals(firstName, passenger.firstName) && Objects.equals(lastName, passenger.lastName) && Objects.equals(documentNumber, passenger.documentNumber) && Objects.equals(documentType, passenger.documentType) && Objects.equals(birthday, passenger.birthday);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, documentNumber, documentType, birthday);
+        return Objects.hash(getId(), firstName, lastName, documentNumber, documentType, birthday);
     }
 
     @Override
     public String toString() {
         return "Passenger{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", documentNumber='" + documentNumber + '\'' +
