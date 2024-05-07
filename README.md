@@ -13,12 +13,14 @@ Si no tienes algunas de estas herramientas instaladas en su máquina, sigue las 
 
 # Guía De Conectividad
 
-Enlaza tu conexión de base de datos en tu archivo "application.yml", configura los datos solicitantes
+Enlaza tu conexión de base de datos en tu archivo "application-prod.properties", configura los datos solicitantes
 ```
-  url: conexionstringdetubasededatos
-  username: username de mysql
-  password: password de mysql
+  spring.datasource.url=jdbc:mysql://localhost:3306/mydatabase
+  spring.datasource.username=myuser
+  spring.datasource.password=mypassword
 ```
+Ten en cuenta que este archivo y datos no estaran disponibles en el repositorio por seguridad.
+
 Una vez conectada tu base de datos, aplica los scripts en tu editor preferido (Workbench o el que gustes)
 
 ## Chequear requisitos
