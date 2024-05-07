@@ -1,23 +1,25 @@
-# donjavidev - Curso: Base de datos con Java y Spring Data
+# Curso: Base de datos con Java y Spring Data
 
-Este repositorio contiene todo lo necesario para poder seguir el curso desde el inicio hasta el final.
-
-## Tabla de contenidos
-
-Los siguientes son los puntos mas importantes en este archivo:
-- [Requisitos](#Requisitos)
-- [Chequear requisitos](#chequear-requisitos)
-- [FAQ](#faq)
+Este repositorio contiene todo lo necesario para poder comprender el curso desde el inicio hasta el final.
 
 # Requisitos
 
-Para poder realizar el curso necesitas tener instalado en tu maquina las siguientes herramientas:
 - [Java](http://jdk.java.net/)
 - [Maven](https://maven.apache.org/)
 - [Git](https://git-scm.com/)
 - [Docker](https://www.docker.com/)
 
 Si no tienes algunas de estas herramientas instaladas en su máquina, sigue las instrucciones en la documentación oficial de cada herramienta.
+
+# Guía De Conectividad
+
+Enlaza tu conexión de base de datos en tu archivo "application.yml", configura los datos solicitantes
+```
+  url: conexionstringdetubasededatos
+  username: username de mysql
+  password: password de mysql
+```
+Una vez conectada tu base de datos, aplica los scripts en tu editor preferido (Workbench o el que gustes)
 
 ## Chequear requisitos
 
