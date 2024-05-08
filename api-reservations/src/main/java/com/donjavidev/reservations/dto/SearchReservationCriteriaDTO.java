@@ -3,6 +3,7 @@ package com.donjavidev.reservations.dto;
 import java.time.LocalDate;
 
 public class SearchReservationCriteriaDTO {
+
     private Long itineraryId;
     private String firstName;
     private String lastName;

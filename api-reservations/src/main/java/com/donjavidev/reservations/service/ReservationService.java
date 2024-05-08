@@ -6,6 +6,7 @@ import com.donjavidev.reservations.dto.ReservationDTO;
 import com.donjavidev.reservations.exception.ReservationException;
 import com.donjavidev.reservations.model.Reservation;
 import com.donjavidev.reservations.repository.ReservationRepository;
+import com.donjavidev.reservations.specification.ReservationSpecification;
 import jakarta.validation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +24,9 @@ public class ReservationService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReservationService.class);
 
-    private ReservationRepository repository;
+    private final ReservationRepository repository;
 
-    private ConversionService conversionService;
+    private final ConversionService conversionService;
 
     @Autowired
     public ReservationService(ReservationRepository repository, ConversionService conversionService) {
@@ -34,7 +35,7 @@ public class ReservationService {
     }
 
     public List<ReservationDTO> getReservations(SearchReservationCriteriaDTO criteria) {
-        return conversionService.convert(repository.findAll(), List.class);
+        return conversionService.convert(repository.findAll(ReservationSpecification.withSearchCriteria(criteria)), List.class);
     }
 
     public ReservationDTO getReservationById(Long id) {
@@ -57,7 +58,7 @@ public class ReservationService {
     }
 
     public ReservationDTO update(Long id, ReservationDTO reservation) {
-        if (getReservationById(id) == null) {
+        if (!repository.existsById(id)) {
             LOGGER.debug("Not exist reservation with the id {}", id);
             throw new ReservationException(APIError.RESERVATION_NOT_FOUND);
         }
@@ -70,7 +71,7 @@ public class ReservationService {
     }
 
     public void delete(Long id) {
-        if (getReservationById(id) == null) {
+        if (!repository.existsById(id)) {
             LOGGER.debug("Not exist reservation with the id {}", id);
             throw new ReservationException(APIError.RESERVATION_NOT_FOUND);
         }
