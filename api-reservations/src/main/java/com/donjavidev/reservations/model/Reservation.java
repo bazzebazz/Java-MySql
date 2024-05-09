@@ -55,14 +55,16 @@ public class Reservation extends Base {
         this.creationDate = creationDate;
     }
 
-
-    //* Generate equals and HashCode
+    // * Generate equals and HashCode
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Reservation that = (Reservation) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(passengers, that.passengers) && Objects.equals(itinerary, that.itinerary) && Objects.equals(creationDate, that.creationDate);
+        return Objects.equals(getId(), that.getId()) && Objects.equals(passengers, that.passengers)
+                && Objects.equals(itinerary, that.itinerary) && Objects.equals(creationDate, that.creationDate);
     }
 
     @Override
@@ -70,14 +72,10 @@ public class Reservation extends Base {
         return Objects.hash(getId(), passengers, itinerary, creationDate);
     }
 
-    //* Generate ToString
+    // * Generate ToString
     @Override
     public String toString() {
-        return "Reservation{" +
-                "id=" + getId() +
-                ", passengers=" + passengers +
-                ", itinerary=" + itinerary +
-                ", creationDate=" + creationDate +
-                '}';
+        return "Reservation{" + "id=" + getId() + ", passengers=" + passengers + ", itinerary=" + itinerary
+                + ", creationDate=" + creationDate + '}';
     }
 }

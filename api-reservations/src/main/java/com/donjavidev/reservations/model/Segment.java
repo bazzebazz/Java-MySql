@@ -62,13 +62,17 @@ public class Segment extends Base {
         this.carrier = carrier;
     }
 
-    //*Generate Equals and Hascode + ToString
+    // *Generate Equals and Hascode + ToString
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Segment segment = (Segment) o;
-        return Objects.equals(getId(), segment.getId()) && Objects.equals(origin, segment.origin) && Objects.equals(destination, segment.destination) && Objects.equals(departure, segment.departure) && Objects.equals(arrival, segment.arrival) && Objects.equals(carrier, segment.carrier);
+        return Objects.equals(getId(), segment.getId()) && Objects.equals(origin, segment.origin)
+                && Objects.equals(destination, segment.destination) && Objects.equals(departure, segment.departure)
+                && Objects.equals(arrival, segment.arrival) && Objects.equals(carrier, segment.carrier);
     }
 
     @Override
@@ -78,13 +82,8 @@ public class Segment extends Base {
 
     @Override
     public String toString() {
-        return "Segment{" +
-                "id=" + getId() +
-                ", origin='" + origin + '\'' +
-                ", destination='" + destination + '\'' +
-                ", departure='" + departure + '\'' +
-                ", arrival='" + arrival + '\'' +
-                ", carrier='" + carrier + '\'' +
-                '}';
+        return "Segment{" + "id=" + getId() + ", origin='" + origin + '\'' + ", destination='" + destination + '\''
+                + ", departure='" + departure + '\'' + ", arrival='" + arrival + '\'' + ", carrier='" + carrier + '\''
+                + '}';
     }
 }

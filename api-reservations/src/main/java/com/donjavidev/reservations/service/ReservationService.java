@@ -1,5 +1,6 @@
 package com.donjavidev.reservations.service;
 
+import com.donjavidev.reservations.dao.ReservationDao;
 import com.donjavidev.reservations.dto.SearchReservationCriteriaDTO;
 import com.donjavidev.reservations.enums.APIError;
 import com.donjavidev.reservations.dto.ReservationDTO;
@@ -24,18 +25,18 @@ public class ReservationService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReservationService.class);
 
-    private final ReservationRepository repository;
+    private final ReservationDao repository;
 
     private final ConversionService conversionService;
 
     @Autowired
-    public ReservationService(ReservationRepository repository, ConversionService conversionService) {
+    public ReservationService(ReservationDao repository, ConversionService conversionService) {
         this.repository = repository;
         this.conversionService = conversionService;
     }
 
     public List<ReservationDTO> getReservations(SearchReservationCriteriaDTO criteria) {
-        return conversionService.convert(repository.findAll(ReservationSpecification.withSearchCriteria(criteria)), List.class);
+        return conversionService.convert(repository.findAll(criteria), List.class);
     }
 
     public ReservationDTO getReservationById(Long id) {

@@ -71,15 +71,19 @@ public class Passenger extends Base {
         this.birthday = birthday;
     }
 
-
-    //*Generate Equals and Hascode + ToString
+    // *Generate Equals and Hascode + ToString
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Passenger passenger = (Passenger) o;
-        return Objects.equals(getId(), passenger.getId()) && Objects.equals(firstName, passenger.firstName) && Objects.equals(lastName, passenger.lastName) && Objects.equals(documentNumber, passenger.documentNumber) && Objects.equals(documentType, passenger.documentType) && Objects.equals(birthday, passenger.birthday);
+        return Objects.equals(getId(), passenger.getId()) && Objects.equals(firstName, passenger.firstName)
+                && Objects.equals(lastName, passenger.lastName)
+                && Objects.equals(documentNumber, passenger.documentNumber)
+                && Objects.equals(documentType, passenger.documentType) && Objects.equals(birthday, passenger.birthday);
     }
 
     @Override
@@ -89,13 +93,8 @@ public class Passenger extends Base {
 
     @Override
     public String toString() {
-        return "Passenger{" +
-                "id=" + getId() +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", documentNumber='" + documentNumber + '\'' +
-                ", documentType='" + documentType + '\'' +
-                ", birthday=" + birthday +
-                '}';
+        return "Passenger{" + "id=" + getId() + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\''
+                + ", documentNumber='" + documentNumber + '\'' + ", documentType='" + documentType + '\''
+                + ", birthday=" + birthday + '}';
     }
 }
