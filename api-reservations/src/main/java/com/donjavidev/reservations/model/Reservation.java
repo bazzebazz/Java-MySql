@@ -15,15 +15,16 @@ import java.util.Objects;
 @EntityListeners(ReservationEntityListener.class)
 public class Reservation extends Base {
 
+    @OrderBy("lastName ASC")
     @Valid
     @NotEmpty(message = "You need at least one passenger")
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @Cascade(CascadeType.ALL)
     @JoinColumn(name = "reservation_id")
     private List<Passenger> passengers;
 
     @Valid
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @Cascade(CascadeType.ALL)
     @JoinColumn(name = "itinerary_id")
     private Itinerary itinerary;
@@ -75,7 +76,6 @@ public class Reservation extends Base {
     // * Generate ToString
     @Override
     public String toString() {
-        return "Reservation{" + "id=" + getId() + ", passengers=" + passengers + ", itinerary=" + itinerary
-                + ", creationDate=" + creationDate + '}';
+        return "Reservation{" + "id=" + getId() + ", creationDate=" + creationDate + '}';
     }
 }

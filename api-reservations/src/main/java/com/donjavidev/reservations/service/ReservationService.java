@@ -13,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,18 +27,19 @@ public class ReservationService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReservationService.class);
 
-    private final ReservationDao repository;
+    private final ReservationRepository repository;
 
     private final ConversionService conversionService;
 
     @Autowired
-    public ReservationService(ReservationDao repository, ConversionService conversionService) {
+    public ReservationService(ReservationRepository repository, ConversionService conversionService) {
         this.repository = repository;
         this.conversionService = conversionService;
     }
 
     public List<ReservationDTO> getReservations(SearchReservationCriteriaDTO criteria) {
-        return conversionService.convert(repository.findAll(criteria), List.class);
+        Pageable pageable  = PageRequest.of(criteria.getPageActual(), criteria.getPageSize());
+        return conversionService.convert(repository.findAll(ReservationSpecification.withSearchCriteria(criteria), pageable), List.class);
     }
 
     public ReservationDTO getReservationById(Long id) {
@@ -63,6 +66,8 @@ public class ReservationService {
             LOGGER.debug("Not exist reservation with the id {}", id);
             throw new ReservationException(APIError.RESERVATION_NOT_FOUND);
         }
+
+        LOGGER.info("Queries executes to obtain the information");
         Reservation transformed = conversionService.convert(reservation, Reservation.class);
 
         validateEntity(transformed);

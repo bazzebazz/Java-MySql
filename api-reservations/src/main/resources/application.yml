@@ -2,9 +2,16 @@ spring:
   profiles:
     active: prod
   jpa:
-    show-sql: true
     hibernate:
       ddl-auto: validate
+    show-sql: true
+
+  flyway:
+    locations: classpath:db
+    sql-migration-prefix: V
+    repeatable-sql-migration-prefix: R
+    sql-migration-separator: __
+    sql-migration-suffixes: .sql
 
 management:
   info:
